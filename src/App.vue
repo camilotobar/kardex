@@ -1,10 +1,15 @@
 <template>
   <div id="app">
     <v-app>
-      <div id="nav">
-        <h1>Kardex</h1>
-      </div>
-      <router-view/>
+      <v-content>
+        <v-row>
+          <Header></Header>
+        </v-row>
+        <v-divider class="my-5 mx-10"></v-divider>
+        <v-row>
+          <router-view/>
+        </v-row>
+      </v-content>
     </v-app>
   </div>
 </template>
@@ -31,3 +36,9 @@
   }
 }
 </style>
+<script>
+  import Header from "./components/Header";
+  export default {
+    components: {Header}
+  }
+</script>
