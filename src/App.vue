@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-app>
-      <v-content>
+      <v-content class="my-5 mx-10">
         <v-row>
           <Header></Header>
         </v-row>
