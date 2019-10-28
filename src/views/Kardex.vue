@@ -1,11 +1,6 @@
 <template>
     <div>
-         <v-data-table
-            :headers="headers"
-            :items="orders"
-            :items-per-page="5"
-            class="elevation-1"
-        ></v-data-table>
+        <v-data-table :headers="headers" :items="orders" :items-per-page="5" class="elevation-1"></v-data-table>
 
     </div>
 </template>
@@ -15,21 +10,21 @@
         name: "Kardex",
         data() {
             return {
-               headers:[
-                { text:'Fecha', value: 'fecha'},
-               { text:'Concepto'},
-               { text:'Entrada-Unidades'},
-               { text:'Entrada-Valor Unitario'},
-               { text:'Entrada-Total'},
-                { text:'Salida-Unidades'},
-                { text:'Salida-Valor Unitario'},
-                { text:'Salida-Total'},
-                { text:'Saldo-Unidades'},
-                { text:'Saldo-Valor Unitario'},
-                { text: 'Saldo-Total'}
+                headers: [
+                    {text: 'Fecha', value: 'fecha', sortable: true},
+                    {text: 'Concepto', sortable: false},
+                    {text: 'Entrada-Unidades', sortable: false},
+                    {text: 'Entrada-Valor Unitario', sortable: false},
+                    {text: 'Entrada-Total', sortable: false},
+                    {text: 'Salida-Unidades', sortable: false},
+                    {text: 'Salida-Valor Unitario', sortable: false},
+                    {text: 'Salida-Total', sortable: false},
+                    {text: 'Saldo-Unidades', sortable: false},
+                    {text: 'Saldo-Valor Unitario', sortable: false},
+                    {text: 'Saldo-Total', sortable: false}
                 ],
 
-                orders:[
+                orders: [
                     {
                         fecha: '10/10/2019'
                     }
