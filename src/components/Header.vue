@@ -14,9 +14,10 @@
                             ></v-select>
                         </v-col>
                         <v-col cols="6">
-                            <v-btn>
-                                Agregar orden
-                            </v-btn>
+                           <v-flex>
+                               <orden/>
+                           </v-flex>
+                           
                         </v-col>
                     </v-row>
                 </v-content>
@@ -26,7 +27,9 @@
 </template>
 
 <script>
+import orden from './Nueva_Orden'
     export default {
+        components:{ orden },
         name: "Header",
         data(){
             return {
