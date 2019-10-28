@@ -11,7 +11,7 @@
         </template>
         <v-card>
             <v-card-title>
-             <h2 > Nueva Orden </h2>   
+             <h2> Nueva Orden </h2>   
             </v-card-title> 
             <v-form>
                 <v-container >
@@ -23,7 +23,7 @@
                         </v-col>
                         <v-col cols="5" sm="6" md="3">
                             <v-text-field
-                                label="Outlined"
+                                label="Fecha"
                                 outlined
                             ></v-text-field>
                         </v-col>
@@ -37,7 +37,7 @@
                         </v-col>
                         <v-col cols="5" sm="6" md="3">
                             <v-text-field
-                                label="Outlined"
+                                label="Unidades"
                                 outlined
                             ></v-text-field>
                         </v-col>
@@ -51,7 +51,7 @@
                         </v-col>
                         <v-col cols="5" sm="6" md="3">
                             <v-text-field
-                                label="Outlined"
+                                label="Valor total"
                                 outlined
                             ></v-text-field>
                         </v-col>
@@ -60,12 +60,12 @@
                     <v-row justify="center">
                         <v-col cols="5" sm="6" md="3">
                         <p class="text-left">
-                            Tipo de movimiento :
+                            Método escogido :
                         </p>
                         </v-col>
                         <v-col cols="5" sm="6" md="3">
                             <p class="text-left">
-                            ////poner metodo escogido
+                             <metodo_valoracion/>
                             </p>
                         </v-col>
                     </v-row>
@@ -79,7 +79,22 @@
 </template>
 
 <script>
+// import metodo_escogido from './Header'
 export default {
-    
+    // components: {
+    //     metodo_escogido
+    // },
+    name: "Nueva_Orden",
+    data(){
+            return {
+                metodo_valoracion: ""
+            
+            };
+        },
+        methods:{
+            updateMetodoValoracion(variable){
+                this.metodo_valoracion=variable;
+            }
+        }
 }
 </script>
