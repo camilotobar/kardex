@@ -3,7 +3,7 @@
     <v-app>
       <v-content class="my-5 mx-10">
         <v-row>
-          <Header></Header>
+          <Header :orderFunction="newOrder"></Header>
         </v-row>
         <v-divider class="my-5 mx-10"></v-divider>
         <v-row>
@@ -13,6 +13,19 @@
     </v-app>
   </div>
 </template>
+
+<script>
+  import Header from "./components/Header";
+  export default {
+    components: {Header},
+    methods: {
+      newOrder(order) {
+        // eslint-disable-next-line no-console
+        console.log(`Nueva orden: ${order.items}`);
+      }
+    }
+  }
+</script>
 
 <style lang="scss">
 #app {
@@ -36,9 +49,3 @@
   }
 }
 </style>
-<script>
-  import Header from "./components/Header";
-  export default {
-    components: {Header}
-  }
-</script>

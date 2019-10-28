@@ -1,77 +1,46 @@
 <template>
-    <v-dialog max-width="600px" >
+    <v-dialog max-width="600px">
         <template v-slot:activator="{ on }">
-            <v-btn
-            color="red lighten-2"
-            dark
-            v-on="on"
-            >
-                Agregar Orden
-            </v-btn>
+            <v-btn color="red lighten-2" dark v-on="on">Agregar Orden</v-btn>
         </template>
-        <v-card>
-            <v-card-title>
-             <h2 > Nueva Orden </h2>   
-            </v-card-title> 
+
+        <v-card align="center" outlined>
+            <v-card-title style="background-color: #91b6d7">
+                <h2> Nueva Orden </h2>
+            </v-card-title>
             <v-form>
-                <v-container >
+                <v-container fluid>
                     <v-row justify="center">
-                        <v-col cols="5" sm="6" md="3">
-                            <p class="text-left">
-                                Fecha :
-                            </p>
+                        <v-col cols="6" md="3" sm="6">
+                            <p class="text-left">Concepto:</p>
+                            <v-text-field label="Concepto" v-model="concepto" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="5" sm="6" md="3">
-                            <v-text-field
-                                label="Outlined"
-                                outlined
-                            ></v-text-field>
+                        <v-col cols="6" md="3" sm="6">
+                            <p class="text-left">Fecha:</p>
+                            <v-text-field label="Fecha" hint="Formato DD/MM/YYYY" v-model="fecha" outlined></v-text-field>
                         </v-col>
                     </v-row>
 
                     <v-row justify="center">
-                        <v-col cols="5" sm="6" md="3">
-                        <p class="text-left">
-                            Unidades :
-                        </p>
+                        <v-col cols="6" md="3" sm="6">
+                            <p class="text-left">Unidades:</p>
+                            <v-text-field label="Unidades" type="number" v-model="unidades" outlined ></v-text-field>
                         </v-col>
-                        <v-col cols="5" sm="6" md="3">
-                            <v-text-field
-                                label="Outlined"
-                                outlined
-                            ></v-text-field>
+                        <v-col cols="6" md="3" sm="6">
+                            <p class="text-left">Valor Unitario:</p>
+                            <v-text-field label="Valor Unitario" type="number" v-model="valorUnitario" outlined ></v-text-field>
                         </v-col>
                     </v-row>
 
                     <v-row justify="center">
-                        <v-col cols="5" sm="6" md="3">
-                            <p class="text-left">
-                                Valor total :
-                            </p>
+                        <v-col cols="6" md="3" sm="6">
+                            <p class="text-left">Tipo de movimiento:</p>
+                            <v-select :items="movimientos" v-model="movimiento" outlined></v-select>
                         </v-col>
-                        <v-col cols="5" sm="6" md="3">
-                            <v-text-field
-                                label="Outlined"
-                                outlined
-                            ></v-text-field>
+                        <v-col cols="6" md="3" sm="6">
+                            <v-btn @click="addOrder">Agregar Orden</v-btn>
                         </v-col>
                     </v-row>
-
-                    <v-row justify="center">
-                        <v-col cols="5" sm="6" md="3">
-                        <p class="text-left">
-                            Tipo de movimiento :
-                        </p>
-                        </v-col>
-                        <v-col cols="5" sm="6" md="3">
-                            <p class="text-left">
-                            ////poner metodo escogido
-                            </p>
-                        </v-col>
-                    </v-row>
-
-                    <v-btn>Agregar</v-btn>
-
                 </v-container>
             </v-form>
         </v-card>
@@ -79,7 +48,30 @@
 </template>
 
 <script>
-export default {
-    
-}
+    export default {
+        props: {
+            orderFunction: Function,
+        },
+        data() {
+          return {
+              movimientos: [ 'Compra', 'Venta' ],
+              concepto: '',
+              movimiento: '',
+              fecha: '',
+              unidades: 0,
+              valorUnitario: 0,
+          };
+        },
+        methods: {
+            addOrder() {
+                // eslint-disable-next-line no-console
+                console.log('Nueva orden');
+
+                this.orderFunction({
+                   movimiento: this.movimiento,
+                   concepto: this.concepto
+                });
+            }
+        }
+    }
 </script>
