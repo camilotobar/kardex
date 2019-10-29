@@ -6,7 +6,7 @@
 
         <v-card align="center" outlined>
             <v-card-title style="background-color: #91b6d7">
-                <h2> Nueva Orden </h2>
+                <h2> Nueva Orden de {{ metodoActual }}</h2>
             </v-card-title>
             <v-form>
                 <v-container fluid>
@@ -50,13 +50,13 @@
 <script>
     export default {
         props: {
-            orderFunction: Function,
+            metodoActual: String,
         },
         data() {
           return {
               movimientos: [ 'Compra', 'Venta' ],
               concepto: '',
-              movimiento: '',
+              movimiento: 'Compra',
               fecha: '',
               unidades: 0,
               valorUnitario: 0,
@@ -64,13 +64,24 @@
         },
         methods: {
             addOrder() {
-                // eslint-disable-next-line no-console
-                console.log('Nueva orden');
 
-                this.orderFunction({
-                   movimiento: this.movimiento,
-                   concepto: this.concepto
-                });
+                if(this.unidades <= 0 || this.valorUnitario <= 0) {
+                    alert('Hey!\nUnidades y Valor Unitario deben ser mayores a 0.');
+                    return;
+                }
+                if(this.concepto.length === 0) {
+                    alert('Hey!\nEl concepto de la nueva orden es obligatorio.');
+                    return;
+                }
+
+                this.$emit('newOrder',
+                    {
+                        movimiento: this.movimiento,
+                        concepto: this.concepto,
+                        fecha: this.fecha,
+                        unidades: this.unidades,
+                        valorUnitario: this.valorUnitario,
+                    });
             }
         }
     }

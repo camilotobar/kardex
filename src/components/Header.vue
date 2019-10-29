@@ -9,7 +9,7 @@
                         </v-col>
                         <v-col cols="6">
                            <v-flex>
-                               <Orden :orderFunction="orderFunction"/>
+                               <Orden :metodoActual="metodo_escogido" @newOrder="newOrder"/>
                            </v-flex>
                         </v-col>
                     </v-row>
@@ -25,21 +25,23 @@ import Orden from './Nueva_Orden'
         components:{ Orden },
         name: "Header",
         props: {
-            orderFunction: Function,
+
         },
         data(){
             return {
-                items:['Promedio ponderado','Primeros en entrar, primeros en salir'],
-                metodo_escogido:''
-
+                items:['Promedio ponderado','PEPS'],
+                metodo_escogido:'',
             }
         },
         methods : {
             metodo_valoracion(){
 
+            },
+            newOrder(order) {
                 // eslint-disable-next-line no-console
-                console.log(this.metodo_escogido)
-            }
+                console.log(`In header: ${order.movimiento}`);
+                this.$emit('newOrder', order);
+            },
         }
     }
 
