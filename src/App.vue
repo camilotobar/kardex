@@ -18,23 +18,33 @@
     import Header from "./components/Header";
     import Kardex from "./views/Kardex";
     import KardexPEPS from "./Logic/KardexPEPS";
+    import KardexPromedio from "./Logic/KardexPromedio";
 
     export default {
         components: {Kardex, Header},
         data() {
             return {
                 orders: [],
+                currentMethod: '',
             };
         },
         methods: {
             newOrder(order) {
-                // eslint-disable-next-line no-console
-                console.log(`In App: ${order.concepto}`);
-                if (order.movimiento === 'Venta' && KardexPEPS.unidadesTotales < order.unidades) {
-                    alert(`No existen las suficientes unidades en el inventario para poder venderlas, sólo existen ${KardexPEPS.unidadesTotales} unidades.`);
+                if (order.movimiento === 'Venta' && KardexPEPS.saldoUnidades < order.unidades) {
+                    alert(`No existen las suficientes unidades en el inventario para poder venderlas, sólo existen ${KardexPEPS.saldoUnidades} unidades.`);
                 }
-                this.orders.push(order);
+                else {
+                    if (order.movimiento === 'Venta' && order.metodoValoracion === 'PEPS')
+                        KardexPEPS.venta(order);
+                    else if (order.metodoValoracion === 'PEPS')
+                        KardexPEPS.compra(order);
+                    else if (order.movimiento === 'Venta')
+                        KardexPromedio.venta(order);
+                    else
+                        KardexPromedio.compra(order);
 
+                    this.orders = KardexPEPS.datosKardex;
+                }
             }
         }
     }

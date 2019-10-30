@@ -79,8 +79,10 @@
                         movimiento: this.movimiento,
                         concepto: this.concepto,
                         fecha: this.fecha,
-                        unidades: this.unidades,
-                        valorUnitario: this.valorUnitario,
+                        unidades: (this.unidades * 1),
+                        valorUnitario: (this.valorUnitario * 1),
+                        valorTotal: (this.valorUnitario * this.unidades),
+                        metodoValoracion: this.metodoActual,
                     });
             }
         }
