@@ -3,7 +3,7 @@
         <v-app>
             <v-content class="my-5 mx-10">
                 <v-row>
-                    <Header @newOrder="newOrder"></Header>
+                    <Header @methodChanged="methodChanged" @newOrder="newOrder"></Header>
                 </v-row>
                 <v-divider class="my-5 mx-10"></v-divider>
                 <v-row>
@@ -18,23 +18,48 @@
     import Header from "./components/Header";
     import Kardex from "./views/Kardex";
     import KardexPEPS from "./Logic/KardexPEPS";
+    import KardexPromedio from "./Logic/KardexPromedio";
 
     export default {
         components: {Kardex, Header},
         data() {
             return {
                 orders: [],
+                currentMethod: '',
             };
         },
         methods: {
             newOrder(order) {
-                // eslint-disable-next-line no-console
-                console.log(`In App: ${order.concepto}`);
-                if (order.movimiento === 'Venta' && KardexPEPS.unidadesTotales < order.unidades) {
-                    alert(`No existen las suficientes unidades en el inventario para poder venderlas, sólo existen ${KardexPEPS.unidadesTotales} unidades.`);
+                // No deja que se venda si el inventario no lo soporta
+                if (order.movimiento === 'Venta' && KardexPEPS.saldoUnidades < order.unidades) {
+                    alert(`No existen las suficientes unidades en el inventario para poder venderlas, sólo existen ${KardexPEPS.saldoUnidades} unidades.`);
                 }
-                this.orders.push(order);
+                else {
+                    // Calculo de la orden en el método PEPS
+                    if (order.metodoValoracion === 'PEPS') {
+                        if (order.movimiento === 'Venta')
+                            KardexPEPS.venta(order);
+                        else
+                            KardexPEPS.compra(order);
 
+                        this.orders = KardexPEPS.datosKardex;
+                    }
+                    // Calculo de la orden en el método Promedio Ponderado
+                    else {
+                        if (order.movimiento === 'Venta')
+                            KardexPromedio.venta(order);
+                        else
+                            KardexPromedio.compra(order);
+
+                        this.orders = KardexPromedio.datosKardex;
+                    }
+                }
+            },
+            methodChanged(selected) {
+                if (selected === 'PEPS')
+                    this.orders = KardexPEPS.datosKardex;
+                else
+                    this.orders = KardexPromedio.datosKardex;
             }
         }
     }

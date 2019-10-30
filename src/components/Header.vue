@@ -1,15 +1,16 @@
 <template>
     <div>
+        <h1>Kardex</h1>
         <v-card outlined>
             <v-card-text>
                 <v-content>
                     <v-row>
                         <v-col cols="6">
-                          <v-select :items="items" label="Método de valoración" outlined v-model="metodo_escogido" @change="metodo_valoracion"></v-select>
+                          <v-select :items="items" label="Método de valoración" outlined v-model="metodoEscogido" @change="metodo_valoracion"></v-select>
                         </v-col>
                         <v-col cols="6">
                            <v-flex>
-                               <Orden :metodoActual="metodo_escogido" @newOrder="newOrder"/>
+                               <Orden :metodoActual="metodoEscogido" @newOrder="newOrder"/>
                            </v-flex>
                         </v-col>
                     </v-row>
@@ -30,16 +31,14 @@ import Orden from './Nueva_Orden'
         data(){
             return {
                 items:['Promedio ponderado','PEPS'],
-                metodo_escogido:'',
+                metodoEscogido: 'PEPS',
             }
         },
         methods : {
             metodo_valoracion(){
-
+                this.$emit('methodChanged', this.metodoEscogido);
             },
             newOrder(order) {
-                // eslint-disable-next-line no-console
-                console.log(`In header: ${order.movimiento}`);
                 this.$emit('newOrder', order);
             },
         }
