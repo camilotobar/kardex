@@ -31,10 +31,10 @@
         methods: {
             newOrder(order) {
                 // No deja que se venda si el inventario no lo soporta
-                if (order.movimiento === 'Venta' && KardexPEPS.saldoUnidades < order.unidades) {
-                    alert(`No existen las suficientes unidades en el inventario para poder venderlas, sólo existen ${KardexPEPS.saldoUnidades} unidades.`);
-                }
-                else {
+                // if ((order.movimiento === 'Venta' && KardexPEPS.saldoUnidades < order.unidades ) | (order.movimiento === 'Venta' && KardexPromedio.saldoUnidades < order.unidades)) {
+                //     alert(`No existen las suficientes unidades en el inventario para poder venderlas, sólo existen ${KardexPEPS.saldoUnidades} unidades.`);
+                // }
+                // else {
                     // Calculo de la orden en el método PEPS
                     if (order.metodoValoracion === 'PEPS') {
                         if (order.movimiento === 'Venta')
@@ -53,7 +53,7 @@
 
                         this.orders = KardexPromedio.datosKardex;
                     }
-                }
+                // }
             },
             methodChanged(selected) {
                 if (selected === 'PEPS')
