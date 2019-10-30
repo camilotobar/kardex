@@ -28,14 +28,16 @@
                         </v-col>
                         <v-col cols="6" md="3" sm="6">
                             <p class="text-left">Valor Unitario:</p>
-                            <v-text-field label="Valor Unitario" type="number" v-model="valorUnitario" outlined ></v-text-field>
+                            <v-text-field label="Valor Unitario" type="number" v-model="valorUnitario" v-show="esCompra==true"   outlined ></v-text-field>
+                            <v-text-field label="Valor Unitario" type="number" v-model="valorUnitario" v-show="esCompra==false" disabled   outlined ></v-text-field>
+
                         </v-col>
                     </v-row>
 
                     <v-row justify="center">
                         <v-col cols="6" md="3" sm="6">
                             <p class="text-left">Tipo de movimiento:</p>
-                            <v-select :items="movimientos" v-model="movimiento" outlined></v-select>
+                            <v-select :items="movimientos" v-model="movimiento" outlined  @change="habilitarVU()"></v-select>
                         </v-col>
                         <v-col cols="6" md="3" sm="6">
                             <v-btn @click="addOrder">Agregar Orden</v-btn>
@@ -60,13 +62,18 @@
               fecha: '',
               unidades: 0,
               valorUnitario: 0,
+              esCompra:true
           };
         },
         methods: {
             addOrder() {
 
-                if(this.unidades <= 0 || this.valorUnitario <= 0) {
+                if(this.movimiento==='Compra' && (this.unidades <= 0 || this.valorUnitario <= 0)) {
                     alert('Hey!\nUnidades y Valor Unitario deben ser mayores a 0.');
+                    return;
+                }
+                if(this.movimiento==='Venta' && this.unidades <= 0){
+                    alert('Hey!\nLas unidades deben ser mayores a 0.');
                     return;
                 }
                 if(this.concepto.length === 0) {
@@ -84,7 +91,23 @@
                         valorTotal: (this.valorUnitario * this.unidades),
                         metodoValoracion: this.metodoActual,
                     });
+            },
+             habilitarVU(){
+
+                // eslint-disable-next-line no-console
+                console.log(this.esCompra)
+
+                // eslint-disable-next-line no-console
+                console.log(this.movimiento)
+
+                if(this.movimiento == 'Venta'){
+                    this.esCompra=false;
+                }else{
+                   this.esCompra=true;
+                }
             }
+
+           
         }
     }
 </script>
