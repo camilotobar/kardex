@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h1>Tabla Kardex</h1>
         <v-data-table :headers="headers" :items="orders" :items-per-page="5" class="elevation-1"></v-data-table>
     </div>
 </template>

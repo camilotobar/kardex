@@ -3,7 +3,7 @@
         <v-app>
             <v-content class="my-5 mx-10">
                 <v-row>
-                    <Header @newOrder="newOrder"></Header>
+                    <Header @methodChanged="methodChanged" @newOrder="newOrder"></Header>
                 </v-row>
                 <v-divider class="my-5 mx-10"></v-divider>
                 <v-row>
@@ -30,21 +30,36 @@
         },
         methods: {
             newOrder(order) {
+                // No deja que se venda si el inventario no lo soporta
                 if (order.movimiento === 'Venta' && KardexPEPS.saldoUnidades < order.unidades) {
                     alert(`No existen las suficientes unidades en el inventario para poder venderlas, sólo existen ${KardexPEPS.saldoUnidades} unidades.`);
                 }
                 else {
-                    if (order.movimiento === 'Venta' && order.metodoValoracion === 'PEPS')
-                        KardexPEPS.venta(order);
-                    else if (order.metodoValoracion === 'PEPS')
-                        KardexPEPS.compra(order);
-                    else if (order.movimiento === 'Venta')
-                        KardexPromedio.venta(order);
-                    else
-                        KardexPromedio.compra(order);
+                    // Calculo de la orden en el método PEPS
+                    if (order.metodoValoracion === 'PEPS') {
+                        if (order.movimiento === 'Venta')
+                            KardexPEPS.venta(order);
+                        else
+                            KardexPEPS.compra(order);
 
-                    this.orders = KardexPEPS.datosKardex;
+                        this.orders = KardexPEPS.datosKardex;
+                    }
+                    // Calculo de la orden en el método Promedio Ponderado
+                    else {
+                        if (order.movimiento === 'Venta')
+                            KardexPromedio.venta(order);
+                        else
+                            KardexPromedio.compra(order);
+
+                        this.orders = KardexPromedio.datosKardex;
+                    }
                 }
+            },
+            methodChanged(selected) {
+                if (selected === 'PEPS')
+                    this.orders = KardexPEPS.datosKardex;
+                else
+                    this.orders = KardexPromedio.datosKardex;
             }
         }
     }

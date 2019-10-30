@@ -36,7 +36,7 @@ import Orden from './Nueva_Orden'
         },
         methods : {
             metodo_valoracion(){
-
+                this.$emit('methodChanged', this.metodoEscogido);
             },
             newOrder(order) {
                 this.$emit('newOrder', order);
