@@ -1,20 +1,17 @@
 <template>
   <div>
-    <h1>Kardex de {{nombreEmpresa}}</h1>
-    <v-card outlined>
+    <v-card class="pa-5" outlined width="96vw">
       <v-card-text>
         <v-content>
           <v-row>
-            <v-col cols="6">
-              <v-select
-                :items="items"
-                label="Método de valoración"
-                outlined
-                v-model="metodoEscogido"
-                @change="metodo_valoracion"
-              ></v-select>
+            <v-col cols="2">
+              <v-select :items="items" label="Método de valoración" v-model="metodoEscogido" @change="metodo_valoracion" outlined></v-select>
             </v-col>
-            <v-col cols="6">
+            <v-col cols="6" align="left">
+              <h1 style="color: #2c3e50">{{ nombreEmpresa }}</h1>
+              <h2>Producto: {{ nombreProducto }}</h2>
+            </v-col>
+            <v-col cols="4" align="right">
               <v-flex>
                 <Orden :metodoActual="metodoEscogido" @newOrder="newOrder" />
               </v-flex>
@@ -32,7 +29,8 @@ export default {
   components: { Orden },
   name: "Header",
   props: {
-    nombreEmpresa: String, 
+    nombreEmpresa: String,
+    nombreProducto: String,
   },
   data() {
     return {

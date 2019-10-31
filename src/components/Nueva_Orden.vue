@@ -5,13 +5,13 @@
         </template>
 
         <v-card align="center" outlined>
-            <v-card-title style="background-color: #91b6d7">
+            <v-card-title style="background-color: #a4caeb">
                 <h2> Nueva Orden de {{ metodoActual }}</h2>
             </v-card-title>
             <v-form>
                 <v-container fluid>
                     <v-row justify="center">
-                        <v-col cols="6" md="3" sm="6">
+                        <v-col cols="6" md="3" sm="6" align="left">
                             <p class="text-left">Concepto:</p>
                             <v-text-field label="Concepto" v-model="concepto" outlined></v-text-field>
                         </v-col>
@@ -107,7 +107,7 @@
                 }
             }
 
-           
+
         }
     }
 </script>

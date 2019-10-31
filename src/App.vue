@@ -3,27 +3,30 @@
     <v-app>
       <v-content class="my-5 mx-10">
         <v-row>
-          <Header @methodChanged="methodChanged" @newOrder="newOrder" :nombreEmpresa="nombreEmpresa"></Header>
+          <Header @methodChanged="methodChanged" @newOrder="newOrder" :nombreEmpresa="nombreEmpresa" :nombreProducto="nombreProducto"></Header>
         </v-row>
-        <v-divider class="my-5 mx-10"></v-divider>
+        <v-divider class="my-5 mx-1"></v-divider>
         <v-row>
           <Kardex :orders="orders"></Kardex>
         </v-row>
       </v-content>
 
       <v-overlay :value="overlay">
-        <v-card class="pa-8" light>
+        <v-card class="pa-8" light width="25vw">
           <v-form>
-            <v-text-field label="Empresa" v-model="nombreEmpresa" outlined></v-text-field>
-            <v-text-field label="Producto" v-model="invInicial" outlined></v-text-field>
-            <v-text-field label="Unidades iniciales" v-model="unidadesInicial" outlined></v-text-field>
-            <v-text-field label="Valor inicial por unidad" v-model="valorInicial" outlined></v-text-field>
-            <v-btn icon color="#000000" @click="overlay = false">
+            <h2 align="left">Bienvenido,</h2>
+            <v-divider class="my-4"></v-divider>
+            <v-text-field label="Nombre de Empresa" hint="Nombre de la persona jurídica" v-model="nombreEmpresa" outlined></v-text-field>
+            <v-text-field label="Nombre del Producto" hint="Nombre específico del producto" v-model="nombreProducto" outlined></v-text-field>
+            <v-text-field label="Unidades iniciales" type="number" v-model="unidadesIniciales" outlined></v-text-field>
+            <v-text-field label="Valor inicial por unidad" type="number" v-model="valorInicial" outlined></v-text-field>
+            <v-btn icon color="#000000" @click="inventarioInicial">
               <v-icon>mdi-check-bold</v-icon>
             </v-btn>
           </v-form>
         </v-card>
       </v-overlay>
+
     </v-app>
   </div>
 </template>
@@ -42,12 +45,27 @@ export default {
       orders: [],
       currentMethod: "",
       nombreEmpresa:'',
-      invInicial: '',
-      unidadesInicial:0,
+      nombreProducto: '',
+      unidadesIniciales: 0,
       valorInicial:0
     };
   },
   methods: {
+    inventarioInicial() {
+      if(this.unidadesIniciales > 0 && this.valorInicial > 0) {
+        this.overlay = false;
+        let datos = {
+          unidades: (this.unidadesIniciales * 1),
+          valorUnitario: (this.valorInicial * 1),
+          valorTotal: (this.unidadesIniciales * this.valorInicial)
+        };
+        KardexPEPS.inventarioInicial(datos);
+        KardexPromedio.inventarioInicial(datos);
+        this.orders = KardexPEPS.datosKardex;
+      }
+      else
+        alert('Las unidades iniciales y el valor unitario deben ser mayores a 0.\nPor favor intente de nuevo.');
+    },
     newOrder(order) {
       //No deja que se venda si el inventario no lo soporta
       if (

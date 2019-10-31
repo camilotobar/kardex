@@ -9,6 +9,20 @@ class KardexPromedio {
         this.valor_unitario=0;
     }
 
+    inventarioInicial(datos) {
+        this.inventario.push(datos);
+        this.saldoUnidades += datos.unidades;
+        this.saldoTotal += datos.valorTotal;
+        this.valor_unitario += datos.valorUnitario;
+
+        this.datosKardex.push({
+            'concepto': 'Inventario Inicial',
+            'saldo-unidades': datos.unidades,
+            'saldo-valorUnitario': datos.valorUnitario,
+            'saldo-total': `$${datos.valorTotal}`,
+        });
+    }
+
     compra(orden){
 
 
@@ -19,13 +33,13 @@ class KardexPromedio {
             this.valor_unitario= this.saldoTotal/this.saldoUnidades
 
         }else{
-            
+
             this.saldoTotal=orden.valorTotal
             this.saldoUnidades=orden.unidades
             this.valor_unitario=orden.valorUnitario
 
         }
-        
+
         this.inventario.push(orden);
 
 

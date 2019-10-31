@@ -1,7 +1,9 @@
 <template>
     <div>
-        <h1>Tabla Kardex</h1>
-        <v-data-table :headers="headers" :items="orders" :items-per-page="5" class="elevation-1"></v-data-table>
+        <v-card class="pa-7" width="96vw" outlined>
+            <h1 align="left">Tabla Kardex</h1>
+            <v-data-table :headers="headers" :items="orders" :items-per-page="5"></v-data-table>
+        </v-card>
     </div>
 </template>
 

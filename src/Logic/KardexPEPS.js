@@ -8,6 +8,19 @@ class KardexPEPS {
         this.saldoTotal = 0;
     }
 
+    inventarioInicial(datos) {
+        this.inventario.push(datos);
+        this.saldoUnidades += datos.unidades;
+        this.saldoTotal += datos.valorTotal;
+
+        this.datosKardex.push({
+            'concepto': 'Inventario Inicial',
+            'saldo-unidades': datos.unidades,
+            'saldo-valorUnitario': datos.valorUnitario,
+            'saldo-total': `$${datos.valorTotal}`,
+        });
+    }
+
     // Método para comprar a través del método PEPS
     compra(orden) {
         this.inventario.push(orden);
